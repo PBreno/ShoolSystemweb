@@ -1,0 +1,35 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: api-app
+    working_dir: /var/www
+    volumes:
+      - ../src:/var/www
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: api-nginx
+    restart: always
+    ports:
+      - '8000:80'
+    volumes:
+      - ../src:/var/www
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - api
+
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    env_file:
+      - .env
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+volumes:
+  dbdata:
