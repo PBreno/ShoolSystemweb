@@ -5,8 +5,11 @@ services:
       dockerfile: docker/Dockerfile
     container_name: api-app
     working_dir: /var/www
+    env_file:
+      - .env
     volumes:
-      - ../src:/var/www
+      - ../src:/var/www:ro
+    command: uvicorn public.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       - db
 
