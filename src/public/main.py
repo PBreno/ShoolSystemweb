@@ -4,7 +4,7 @@ from starlette.middleware.cors import CORSMiddleware
 from .config.database import get_db
 from .views.api import studentView
 
-app = FastAPI(strict_slashes=True)
+app = FastAPI(strict_slashes=False)
 
 origins = ['*']
 app.add_middleware(
