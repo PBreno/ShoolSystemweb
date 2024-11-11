@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from .config.database import get_db
-from .views.api import studentView
+from .views.api import professionalView, addressView
 
 app = FastAPI(strict_slashes=False)
 
@@ -15,7 +15,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(studentView.router)
+app.include_router(professionalView.router)
+app.include_router(addressView.router)
 
 
 @app.get("/")
