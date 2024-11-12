@@ -5,8 +5,10 @@ from pydantic import BaseModel
 class ProfessionBase(BaseModel):
     name: str
 
+
 class ProfessionCreate(ProfessionBase):
     pass
+
 
 class ProfessionOut(BaseModel):
      id_profession: int

@@ -12,13 +12,15 @@ class ProfessionalBase(BaseModel):
     cpf: str
     rg: str
     phone: str
+    id_profession: int
+    id_address: int
 
 class ProfessionalCreate(ProfessionalBase):
     pass
 
 
 class Professional(ProfessionalCreate):
-    id: int
+    id_professional: int
     profession: ProfessionOut
     address: AddressOut
     created_at: datetime

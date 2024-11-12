@@ -8,8 +8,8 @@ from ..config.database import Base
 
 #Model to professionals table
 class ProfessionalModel(Base):
-    __tablename__ = 'profissionals'
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    __tablename__ = 'professionals'
+    id_professional = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
     email = Column(String, nullable=False)
     birth_date = Column(Date, nullable=False)
@@ -21,8 +21,8 @@ class ProfessionalModel(Base):
     id_profession = Column(Integer, ForeignKey('professions.id_profession', ondelete="CASCADE"), nullable=False)
     id_address = Column(Integer, ForeignKey('addresses.id_address', ondelete="CASCADE"), nullable=False)
 
-    address = relationship('AddressModel')
-    profession = relationship('ProfessionModel')
+    address = relationship('AddressModel', lazy="joined")
+    profession = relationship('ProfessionModel', lazy="joined")
 
 
 

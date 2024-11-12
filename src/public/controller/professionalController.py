@@ -1,13 +1,15 @@
 from typing import Type, Any
 from sqlalchemy.orm import Session
 
-from ..config.database import engine
+from ..config.database import engine, Base
 from ..models.addressModel import AddressModel
+from ..models.courseModel import CourseModel
 from ..models.professionalModel import ProfessionalModel
-from ..models import professionalModel
+#from ..models import professionalModel
 from ..schemas.professional_schema import ProfessionalCreate
 
-professionalModel.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
+#professionalModel.Base.metadata.create_all(bind=engine)
 
 class ProfessionalController:
 
@@ -29,9 +31,9 @@ class ProfessionalController:
 
 
     @staticmethod
-    def create_professional(professional: ProfessionalCreate, db: Session) -> ProfessionalModel:
+    def create_professional(professional: ProfessionalCreate, id_profession: int, id_address: int, db: Session) -> ProfessionalModel:
 
-        new_professional = ProfessionalModel(**professional.model_dump())
+        new_professional = ProfessionalModel(id_professional=id_profession, id_address=id_address, **professional.model_dump())
         db.add(new_professional)
         db.commit()
         db.refresh(new_professional)
@@ -48,7 +50,7 @@ class ProfessionalController:
 
         print('Awq ->', deleted_professional.first())
 
-        #deleted_professional.delete(synchronize_session=False)
+        deleted_professional.delete(synchronize_session=False)
         #db.delete(deleted_professional.first())
         db.commit()
 

@@ -24,7 +24,7 @@ async def get_addresses(db: Session = Depends(get_db)):
     return addresses
 
 
-@router.post("/", response_model=AddressOut)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_address(address: AddressCreate, db: Session = Depends(get_db)):
     address = AddressController.create_address(address, db)
 
