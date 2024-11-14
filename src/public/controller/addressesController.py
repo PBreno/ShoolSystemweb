@@ -38,8 +38,10 @@ class AddressController:
     def delete_address(address_id: int , db: Session):
         address_deleted = db.query(AddressModel).filter(AddressModel.id_address == address_id)
 
+        if address_deleted.first() is None:
+            return Response(status_code=status.HTTP_404_NOT_FOUND)
 
-        print("Foi", address_deleted)
         address_deleted.delete(synchronize_session=False)
         db.commit()
+
         return Response(status_code=status.HTTP_204_NO_CONTENT)

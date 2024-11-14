@@ -12,11 +12,24 @@ class ProfessionalBase(BaseModel):
     cpf: str
     rg: str
     phone: str
-    id_profession: int
-    id_address: int
+
 
 class ProfessionalCreate(ProfessionalBase):
     pass
+
+class ProfessionalUpdate(ProfessionalBase):
+    id_professional: int
+    name: str
+    email: EmailStr
+    birth_date: date
+    cpf: str
+    rg: str
+    phone: str
+    id_profession: int
+    id_address: int
+
+    class Config:
+        from_attributes = True
 
 
 class Professional(ProfessionalCreate):

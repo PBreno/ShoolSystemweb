@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from starlette import status
 
@@ -55,9 +55,10 @@ async def update_address(id: int, address: AddressCreate, db: Session = Depends(
 async def delete_address(id: int, db: Session = Depends(get_db)):
     address_delete = AddressController.delete_address(id, db)
 
-    if address_delete is not status.HTTP_204_NO_CONTENT:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Address with ID {id} not found")
+    print('-> ',address_delete.status_code)
+    if address_delete.status_code is not status.HTTP_204_NO_CONTENT:
+       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                               detail=f"Address with ID {id} not found")
 
     return address_delete
 

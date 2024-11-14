@@ -31,12 +31,15 @@ class ProfessionalController:
 
 
     @staticmethod
-    def create_professional(professional: ProfessionalCreate, id_profession: int, id_address: int, db: Session) -> ProfessionalModel:
+    def create_professional(professional: ProfessionalCreate, db: Session) -> ProfessionalModel | None:
 
-        new_professional = ProfessionalModel(id_professional=id_profession, id_address=id_address, **professional.model_dump())
+
+        new_professional = ProfessionalModel( **professional.model_dump())
+
         db.add(new_professional)
         db.commit()
         db.refresh(new_professional)
+
         return new_professional
 
 

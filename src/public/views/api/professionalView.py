@@ -6,9 +6,9 @@ from starlette import status
 
 from ...config.database import get_db
 from ...controller.professionalController import ProfessionalController
-from ...models.addressModel import AddressModel
-from ...models.professionModel import ProfessionModel
-from ...schemas.professional_schema import ProfessionalCreate, ProfessionalOut, Professional
+#from ...models.addressModel import AddressModel
+#from ...models.professionModel import ProfessionModel
+from ...schemas.professional_schema import ProfessionalCreate, ProfessionalUpdate, Professional
 
 router = APIRouter(
     tags=["Professional"],
@@ -37,14 +37,14 @@ async def get_professional(id: int, db: Session = Depends(get_db)):
     return professional
 
 
-@router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_professional(professional: ProfessionalCreate,  id_profession: int = ProfessionModel.id_profession, id_address: int = AddressModel.id_address,db: Session = Depends(get_db)):
-    print('==================================')
-    print('->', id_profession)
-    print('->', id_address)
-    print('==================================')
-    new_professional = ProfessionalController.create_professional(professional,id_profession,id_address, db)
+@router.post('/', status_code=status.HTTP_201_CREATED, response_model=ProfessionalCreate)
+async def create_professional(professional: ProfessionalCreate,  db: Session = Depends(get_db)):
 
+    new_professional = ProfessionalController.create_professional(professional, db)
+
+    if new_professional is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'Error creating professional')
 
     return new_professional
 

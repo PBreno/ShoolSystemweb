@@ -5,18 +5,20 @@ from pydantic import BaseModel
 from ..schemas.professional_schema import Professional
 
 
-class CouseBase(BaseModel):
+class CourseBase(BaseModel):
     name: str
     duration: int
     modality: str
     period: str
     description: str
+    id_subject: int
+    id_professional: int
 
     class Config:
         from_attributes = True
 
 
-class CourseCreate(CouseBase):
+class CourseCreate(CourseBase):
     pass
 
 

@@ -13,15 +13,15 @@ class CourseModel(Base):
     name = Column(String, nullable=False)
     duration = Column(Integer, nullable=False)
     modality = Column(String, nullable=False)
-    period = Column(Integer, nullable=False)
+    period = Column(String, nullable=False)
     description = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
     id_subject = Column(Integer, ForeignKey('subjects.id_subject'), nullable=False)
     id_professional = Column(Integer, ForeignKey('professionals.id_professional'), nullable=False)
 
-    subject = relationship("SubjectsModel", lazy="joined")
-    professional = relationship("ProfessionalModel", lazy="joined")
+    subject = relationship("SubjectsModel")
+    professional = relationship("ProfessionalModel")
 
 
 #CALLING THE CLASS TO GET THE FK REFERENCES!

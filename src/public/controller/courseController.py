@@ -17,21 +17,25 @@ class CourseController:
 
     @staticmethod
     def get_course_by_id(course_id: int, db: Session):
-        course = db.query(CourseModel).filter_by(id=course_id).first()
+        course = db.query(CourseModel).filter_by(id_course=course_id).first()
         return course
 
 
     @staticmethod
-    def create_course(db: Session, course: CourseCreate):
-        db.add(course)
+    def create_course(course: CourseCreate , db: Session):
+
+        new_course = CourseModel( **course.model_dump())
+
+        db.add(new_course)
         db.commit()
-        db.refresh(course)
-        return course
+        db.refresh(new_course)
+
+        return new_course
 
 
     @staticmethod
     def delete_course(course_id: int, db: Session) -> None | Response :
-        delete_course = db.query(CourseModel).filter_by(id=course_id)
+        delete_course = db.query(CourseModel).filter_by(id_course=course_id)
 
         delete_course.delete(synchronize_session=False)
         db.commit()
