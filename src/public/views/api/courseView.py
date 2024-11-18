@@ -41,7 +41,7 @@ async def get_course_by_id(course_id: int, db: Session = Depends(get_db)):
     return course
 
 
-@router.delete("/{course_id}")
+@router.delete("/{id}")
 async def delete_course_by_id(course_id: int, db: Session = Depends(get_db)):
     course = CourseController.delete_course(course_id, db)
     if not course:
@@ -51,7 +51,7 @@ async def delete_course_by_id(course_id: int, db: Session = Depends(get_db)):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.put("/{course_id}")
+@router.put("/{id}")
 async def update_course(id: int, course: CourseCreate, db: Session = Depends(get_db)):
     course = CourseController.update_course(id, course, db)
 

@@ -1,9 +1,9 @@
 services:
-  api:
+  backend:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: api-app
+    container_name: back-app
     working_dir: /var/www
     env_file:
       - .env
@@ -13,9 +13,22 @@ services:
     depends_on:
       - db
 
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../docker/front/Dockerfile
+    container_name: front-app
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
+    working_dir: /var/www
+    depends_on:
+      - backend
+
   nginx:
     image: nginx:1.27-alpine
-    container_name: api-nginx
+    container_name: back-nginx
     restart: always
     ports:
       - '8000:80'
@@ -23,7 +36,7 @@ services:
       - ../src:/var/www
       - ./nginx:/etc/nginx/conf.d
     depends_on:
-      - api
+      - backend
 
   db:
     image: postgres

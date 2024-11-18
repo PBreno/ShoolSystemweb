@@ -45,7 +45,7 @@ class CourseController:
 
     @staticmethod
     def update_course(course_id: int, course: CourseCreate, db: Session):
-        update_course =  db.query(CourseModel).filter_by(id=course_id)
+        update_course =  db.query(CourseModel).filter_by(id_course=course_id)
 
         update_course.update(course.model_dump())
         db.commit()
